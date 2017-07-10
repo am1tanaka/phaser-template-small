@@ -84,11 +84,12 @@ MyGame.Boot.prototype = {
 // 起動処理
 window.onload = function() {
     // Phaserオブジェクトを生成
-	window.game = new Phaser.Game(640, 360, Phaser.AUTO, "gameContainer");
+	let game = new Phaser.Game(640, 360, Phaser.AUTO, "gameContainer");
 
     // 状態を追加する
     game.state.add("Boot", MyGame.Boot);
     game.state.add("Title", MyGame.Title);
+    game.state.add("Game", MyGame.Game);
 
     // 起動開始
     game.state.start("Boot");
