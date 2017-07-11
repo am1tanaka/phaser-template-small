@@ -1,10 +1,10 @@
 // インスタンス変数、関数の定義
-MyGame.Title = function (game) {
+MyGame.GameOver = function (game) {
 
 };
 
 // タイトル処理
-MyGame.Title.prototype = {
+MyGame.GameOver.prototype = {
     // 作成
     create: function() {
         // 画面の真ん中にタイトルを表示
@@ -14,20 +14,17 @@ MyGame.Title.prototype = {
             boundsAlignH: "center",
             boundsAlignV: "middle"
         };
-        let text = this.add.text(0, 0, "Title", style);
+        let text = this.add.text(0, 0, "Game Over", style);
         text.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
         text.setTextBounds(0, 0, this.world.width, this.world.height);
 
-        // クリックしたら、ゲーム開始するように設定
-        this.input.onDown.addOnce(this.startGame, this);
-
-        // スコアを更新
-        this.state.states.System.AddScore(0);
+        // クリックしたら、タイトルに移動するように設定
+        this.input.onDown.addOnce(this.startTitle, this);
     },
 
-    // ゲームを開始
-    startGame: function() {
-        this.state.start("Game");
+    // タイトルへ移動
+    startTitle: function() {
+        this.state.start("Title");
     },
 
     // 更新処理
@@ -42,6 +39,6 @@ MyGame.Title.prototype = {
 
     // 終了処理
     shutdown: function() {
-        this.input.keyboard.reset(true);
+
     }
 }

@@ -9,13 +9,16 @@
 // ゲーム全体をまとめるためのオブジェクト
  var MyGame = {};
 
-// 起動時のパラメーター
-MyGame.Boot = function (game) {
-
+// ゲーム全体のパラメーター
+MyGame.System = function (game) {
+    // スコア
+    this.score = 0;
+    // スコアテキスト
+    this.scoreText = null;
 }
 
 // 起動処理
-MyGame.Boot.prototype = {
+MyGame.System.prototype = {
     // 読み込み段階を作成(Interphase1より)
     init: function() {
         let box = this.make.graphics(0, 0);
@@ -44,11 +47,14 @@ MyGame.Boot.prototype = {
 
     // キャッシュに読み込み
     preload: function() {
+        // 読み込みURLを設定
         this.load.baseURL = "../../assets";
         this.load.crossOrigin = "anonymous";
 
+        // 星を読み込み
         this.load.image("star", "/images/star.png");
 
+        // ファイルの読み込みが完了した時のコールバックを設定
         this.load.onFileComplete.add(this.fileLoaded, this);
     },
 
@@ -72,12 +78,34 @@ MyGame.Boot.prototype = {
         this.add.tween(this.text).to(
             {alpha: 0}, 500, "Linear", true
         );
+
+        // スコアを追加
+        let style = {
+            font: "bold 24px Arial",
+            fill: "#f00",
+            boundsAlignH: "left",
+            boundsAlignV: "top"
+        };
+        this.scoreText = this.add.text(5, 5, "", style);
+        this.scoreText.setShadow(1, 1, "rgba(255, 255, 255, 0.8)", 1);
+
+        // 常に表示するために、Stageに追加
+        this.stage.addChild(this.scoreText);
     },
 
     // 次の状態へ
     nextState: function() {
         // タイトルへ
         this.state.start("Title");
+    },
+
+    // スコアを加算
+    AddScore: function(add) {
+        this.score += add;
+        if (this.score > 999999) {
+            this.score = 999999;
+        }
+        this.scoreText.text = "Score "+("00000"+this.score).slice(-6);
     }
 }
 
@@ -87,10 +115,12 @@ window.onload = function() {
 	let game = new Phaser.Game(640, 360, Phaser.AUTO, "gameContainer");
 
     // 状態を追加する
-    game.state.add("Boot", MyGame.Boot);
+    game.state.add("System", MyGame.System);
     game.state.add("Title", MyGame.Title);
     game.state.add("Game", MyGame.Game);
+    game.state.add("GameOver", MyGame.GameOver);
+    game.state.add("Clear", MyGame.Clear);
 
     // 起動開始
-    game.state.start("Boot");
+    game.state.start("System");
 };
