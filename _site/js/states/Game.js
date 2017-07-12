@@ -6,7 +6,7 @@ MyGame.Game = function (game) {
     this.cursors = null;
     // スペースキーの取得
     this.spaceKey = null;
-    // 文字の移動速度
+    // 星の移動速度
     this.speed = 200;
 };
 

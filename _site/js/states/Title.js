@@ -21,8 +21,16 @@ MyGame.Title.prototype = {
         // クリックしたら、ゲーム開始するように設定
         this.input.onDown.addOnce(this.startGame, this);
 
+        // スペースキーを生成
+        MyGame.gameParams.StartSpaceKey();
+
         // スコアを描画
         MyGame.gameParams.AddScore(0);
+        this.isReleaseSpace = false;
+    },
+
+    keyStart: function() {
+        this.isStarted = true;
     },
 
     // ゲームを開始
@@ -32,7 +40,9 @@ MyGame.Title.prototype = {
 
     // 更新処理
     update: function() {
-
+        if (MyGame.gameParams.JustDownSpace()) {
+            this.state.start("Game");
+        }
     },
 
     // 描画
@@ -42,6 +52,6 @@ MyGame.Title.prototype = {
 
     // 終了処理
     shutdown: function() {
-        this.input.keyboard.reset(true);
+
     }
 }

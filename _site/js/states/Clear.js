@@ -20,6 +20,10 @@ MyGame.Clear.prototype = {
 
         // クリックしたら、タイトルに移動するように設定
         this.input.onDown.addOnce(this.startTitle, this);
+
+        // スペースキーを開始
+        MyGame.gameParams.StartSpaceKey();
+
     },
 
     // タイトルへ移動
@@ -29,6 +33,9 @@ MyGame.Clear.prototype = {
 
     // 更新処理
     update: function() {
+        if (MyGame.gameParams.JustDownSpace()) {
+            this.state.start("Title");
+        }
 
     },
 

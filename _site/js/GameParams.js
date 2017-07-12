@@ -1,5 +1,8 @@
 MyGame.GameParams = function (game) {
 
+    // キーを無視する秒数
+    this.IGNORE_KEY = 1;
+
     // ゲームオブジェクト
     this.game = game;
     // スコア
@@ -20,6 +23,9 @@ MyGame.GameParams = function (game) {
     // 常に表示するために、Stageに追加
     game.stage.addChild(this.scoreText);
 
+    // スペースキーを定義
+    this.spaceKey = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+
 }
 
 // ゲームパラメーター関連
@@ -32,6 +38,24 @@ MyGame.GameParams.prototype = {
             this.score = 999999;
         }
         this.scoreText.text = "Score "+("00000"+this.score).slice(-6);
-    }
+    },
+
+    // スペースキーの無視を開始
+    StartSpaceKey: function() {
+        this.isStartSpace = false;
+        this.game.time.events.add(Phaser.Timer.SECOND*this.IGNORE_KEY, this._startSpaceKey, this);
+    },
+    _startSpaceKey: function() {
+        this.isStartSpace = true;
+    },
+
+    // スペースキーが押された瞬間か
+    JustDownSpace: function() {
+        if (!this.isStartSpace) {
+            // 読み捨てる。一度読みだすと、falseになる
+            let ignore = this.spaceKey.justDown;
+        }
+        return this.spaceKey.justDown;
+    },
 
 }
