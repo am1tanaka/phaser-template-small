@@ -8,8 +8,6 @@ MyGame.Game = function (game) {
     this.spaceKey = null;
     // 文字の移動速度
     this.speed = 200;
-    // 点数
-    this.score = 0;
 };
 
 // タイトル処理
@@ -31,7 +29,7 @@ MyGame.Game.prototype = {
         this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         // スコアを初期化
-        this.state.states.System.score = 0;
+        MyGame.gameParams.score = 0;
     },
 
     // 更新処理
@@ -84,7 +82,7 @@ MyGame.Game.prototype = {
 
         // Aキーで点数加算
         if (this.input.keyboard.isDown(Phaser.KeyCode.A)) {
-            this.state.states.System.AddScore(100);
+            MyGame.gameParams.AddScore(100);
         }
     },
 

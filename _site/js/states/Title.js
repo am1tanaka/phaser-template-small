@@ -21,8 +21,8 @@ MyGame.Title.prototype = {
         // クリックしたら、ゲーム開始するように設定
         this.input.onDown.addOnce(this.startGame, this);
 
-        // スコアを更新
-        this.state.states.System.AddScore(0);
+        // スコアを描画
+        MyGame.gameParams.AddScore(0);
     },
 
     // ゲームを開始
