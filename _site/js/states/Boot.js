@@ -45,11 +45,19 @@ MyGame.Boot.prototype = {
     // キャッシュに読み込み
     preload: function() {
         // 読み込みURLを設定
-        this.load.baseURL = "../../assets";
+        this.load.baseURL = "../../assets/";
         this.load.crossOrigin = "anonymous";
 
         // 星を読み込み
-        this.load.image("star", "/images/star.png");
+        this.load.image("star", "images/star.png");
+
+        // 音声を読み込み
+        // BGMをボリューム100%、ループありで読み込み
+        this.load.audio("BGM", ["sounds/mp3/CatAstroPhi_shmup_normal.mp3", "sounds/ogg/CatAstroPhi_shmup_normal.ogg"], 1, true);
+
+        // SEを読み込み
+        this.load.audio("PPING", ["sounds/mp3/p-ping.mp3", "sounds/ogg/p-ping.ogg"]);
+        this.load.audio("DEATH", ["sounds/mp3/player_death.mp3", "sounds/ogg/player_death.ogg"]);
 
         // ファイルの読み込みが完了した時のコールバックを設定
         this.load.onFileComplete.add(this.fileLoaded, this);

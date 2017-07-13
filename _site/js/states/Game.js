@@ -8,7 +8,16 @@ MyGame.Game = function (game) {
     this.spaceKey = null;
     // 星の移動速度
     this.speed = 200;
+    // BGM
+    this.bgm = null;
+    // SE
+    this.se = [];
 };
+
+// 効果音：アイテムゲット
+MyGame.SE_PPING = 0;
+// 効果音：死亡
+MyGame.SE_DEATH = 1;
 
 // タイトル処理
 MyGame.Game.prototype = {
@@ -30,6 +39,14 @@ MyGame.Game.prototype = {
 
         // スコアを初期化
         MyGame.gameParams.score = 0;
+
+        // 音読み込み
+        if (this.bgm == null) {
+            this.bgm = this.add.audio("BGM");
+            this.se[0] = this.add.audio("PPING");
+            this.se[1] = this.add.audio("DEATH");
+        }
+        this.bgm.fadeIn(1000, true);
     },
 
     // 更新処理
@@ -59,6 +76,14 @@ MyGame.Game.prototype = {
         }
         this.star.body.velocity = newvel;
 
+        // Qで再生
+        if (this.input.keyboard.isDown(Phaser.KeyCode.Q)) {
+            this.se[MyGame.SE_PPING].play();
+        }
+        if (this.input.keyboard.isDown(Phaser.KeyCode.W)) {
+            this.bgm.fadeOut(1000);
+        }
+
         // スペースキーをチェック
         this.star.tint = 0xffffff;
         if (this.spaceKey.justDown) {
@@ -77,7 +102,7 @@ MyGame.Game.prototype = {
 
         // Cキーでクリア
         if (this.input.keyboard.isDown(Phaser.KeyCode.C)) {
-            this.state.start("Clear", false);
+            this.state.start("Clear", false, false, this.bgm);
         }
 
         // Aキーで点数加算

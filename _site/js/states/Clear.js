@@ -5,6 +5,12 @@ MyGame.Clear = function (game) {
 
 // タイトル処理
 MyGame.Clear.prototype = {
+    // 初期化
+    init: function(bgm) {
+        // bgmをフェードアウト
+        bgm.fadeOut(1000);
+    },
+
     // 作成
     create: function() {
         // 画面の真ん中にタイトルを表示
